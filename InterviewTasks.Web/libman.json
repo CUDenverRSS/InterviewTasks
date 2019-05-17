@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+    "libraries": [
+
+        {
+            "library": "twitter-bootstrap@4.3.1",
+            "destination": "wwwroot/lib/twitter-bootstrap/"
+        },
+        {
+            "library": "vue@2.6.10",
+            "destination": "wwwroot/lib/vue/"
+        },
+        {
+            "library": "axios@0.18.0",
+            "destination": "wwwroot/lib/axios/"
+        }
+    ]
+}
