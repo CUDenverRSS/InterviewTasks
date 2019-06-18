@@ -2,6 +2,6 @@
 {
     public class ProblemSetTwoViewModel
     {
-        
+        public string Message { get; set; }
     }
 }

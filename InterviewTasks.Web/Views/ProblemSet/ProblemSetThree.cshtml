@@ -4,33 +4,62 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+
 <hr/>
 
-<h3>Weather Forecast</h3>
-
-<div class="row">
-    @foreach (var period in Model.Forecast.Properties.Periods.Take(4))
-    {
-        <div class="col-md-3">
-            <div class="text-center font-weight-bold">
-                    @period.Name
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="@period.Icon" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title"></h5>
-                    <h6 class="card-subtitle mb-2 text-muted">@period.WindSpeed winds</h6>
-                    <p class="card-text">
-                        @period.Temperature @period.TemperatureUnit
-                        <br/>
-                        @period.ShortForecast
-                    </p>
-                    
-                </div>
-            </div>
+<h3>Add New Contact</h3>
+<form method="post" asp-action="ProblemSetThree">
+    <div class="form-row">
+        <div class="col">
+            <input type="text" class="form-control" asp-for="NewContact.FirstName" placeholder="First name">
         </div>
-    }
-</div>
-<card>
+        <div class="col">
+            <input type="text" class="form-control" asp-for="NewContact.LastName" placeholder="First name">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" asp-for="NewContact.Email" placeholder="Email">
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" asp-for="NewContact.PhoneNumber" placeholder="Phone Number">
+        </div>
+        <div class="col">
+            <button class="btn btn-primary" value="submit">Submit</button>
+        </div>
+    </div>
 
-</card>
+</form>
+
+<table class="table mt-5">
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var contact in Model.Contacts)
+    {
+        <tr id="@contact.Id">
+            <td>@contact.FirstName</td>
+            <td>@contact.LastName</td>
+            <td>@contact.Email</td>
+            <td>@contact.PhoneNumber</td>
+            <td><input type="button" class="btn btn-danger" value="Delete" onclick="deleteContact(@contact.Id)" /></td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    function deleteContact(id) {
+        $.ajax({
+            url: '/api/Contacts/' + id,
+            type: 'DELETE',
+            success: function(result) {
+                $("#" + id).remove();
+            }
+        });
+    };
+</script>
