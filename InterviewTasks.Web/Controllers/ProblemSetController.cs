@@ -25,12 +25,26 @@ namespace InterviewTasks.Web.Controllers
         // Pull down the source from git as part of the exercise.
 
         /// <summary>
-        /// 
+        /// Create an adding calculator.
+        /// 1. Update ProblemSetOneViewModel to have three integer properties: Num1, Num2, and Sum.
+        /// 2. Add a form to the page with two inputs for Num1 and Num2.
+        /// 3. Create a Post Method that will add Num1 and Num2 and store it in Sum.
+        /// 4. Return the updated value to the page so that we can see the result.
         /// </summary>
         /// <returns></returns>
         public IActionResult ProblemSetOne()
         {
             var model = new ProblemSetOneViewModel();
+            model.Num1 = 0;
+            model.Num2 = 0;
+            model.Sum = 0;
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ProblemSetOne(ProblemSetOneViewModel model)
+        {
+            model.Sum = model.Num1 + model.Num2;
             return View(model);
         }
 
@@ -80,15 +94,16 @@ namespace InterviewTasks.Web.Controllers
 
         /// <summary>
         /// api.weather.gov will allow you to pull in a detailed weather forecast.
+        /// Documentation can be found here: https://www.weather.gov/documentation/services-web-api
         /// 1. Make this api call, to get the data as a json string.
         /// 2. Use Newtonsoft.Json to deserialize this data as a ForecastDTO
         /// 3. Add the forecast to the model
         /// API Call: https://api.weather.gov/gridpoints/BOU/62,61/forecast
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> ProblemSetFive()
+        public async Task<IActionResult> ProblemSetFour()
         {
-            var model = new ProblemSetFiveViewModel();
+            var model = new ProblemSetFourViewModel();
 
             var client = new HttpClient();
             client.BaseAddress = new Uri("https://api.weather.gov/");

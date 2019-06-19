@@ -3,7 +3,7 @@ using InterviewTasks.Web.Models.DTOs;
 
 namespace InterviewTasks.Web.Models
 {
-    public class ProblemSetFiveViewModel
+    public class ProblemSetFourViewModel
     {
         public ForecastDTO Forecast { get; internal set; }
     }
