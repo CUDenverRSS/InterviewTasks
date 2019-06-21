@@ -5,9 +5,35 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<hr/>
+<hr />
 
-<p>
-    Add a form with two inputs. Clicking the submit button should display the sum of the two numbers.
-</p>
+<div class="container">
+
+    @using (Html.BeginForm("ProblemSetTwo", "ProblemSet", FormMethod.Post))
+    {
+
+        <div class="row">
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.NumberOne, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.NumberTwo, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <input type="submit" value="Submit" id="btnSubmit" />
+            </div>
+        </div>
+
+    }
+
+    @if (Model.Sum != null)
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <p>The sum of the numbers is @Model.Sum.Value.ToString()</p>
+            </div>
+        </div>
+    }
+
+</div>
 

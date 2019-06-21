@@ -23,8 +23,14 @@ namespace InterviewTasks.Web.Controllers
         /// 1. Add Problem Set One's method
         /// 2. Pass a message from the server to the client such as 'hello mvc'
         /// </summary>
+        /// 
+        public ActionResult ProblemSetOne()
+        {
+            var model = new ProblemSetOneViewModel() { OutString = "hello mvc"};
+            return View(model);
+        }
 
-
+        
         /// <summary>
         /// Create an adding calculator.
         /// Create a form with two numeric inputs.  When the form is submitted,
@@ -35,6 +41,16 @@ namespace InterviewTasks.Web.Controllers
             var model = new ProblemSetTwoViewModel();
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult ProblemSetTwo(ProblemSetTwoViewModel vm)
+        {
+            var sum = vm.NumberOne + vm.NumberTwo;
+            vm.Sum = sum;
+            return View(vm);
+        }
+
+
 
         /// <summary>
         /// For Problem Set Three, you will be performing operations on a contact list.
@@ -49,9 +65,13 @@ namespace InterviewTasks.Web.Controllers
         /// 4.a. Add the ability to delete a contact in the table.  Display a confirmation before the record is deleted.
         /// 4.b. Implement the delete functionality within the business logic.
         /// </summary>
-        public IActionResult ProblemSetThree()
+        public async Task<ActionResult> ProblemSetThree()
         {
             var model = new ProblemSetThreeViewModel();
+            var client = new HttpClient();
+            client.BaseAddress = new Uri($"{Request.Scheme}://{Request.Host}{Request.PathBase}");
+            var response = await client.GetStringAsync("/api/contacts");
+            model.Contacts = JsonConvert.DeserializeObject<List<Contact>>(response);
             return View(model);
         }
 

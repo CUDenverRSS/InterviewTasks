@@ -3,14 +3,16 @@ using InterviewTasks.Web.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InterviewTasks.Web.Migrations
 {
     [DbContext(typeof(InterviewTasksContext))]
-    partial class InterviewTasksContextModelSnapshot : ModelSnapshot
+    [Migration("20190621211310_addingFirstName")]
+    partial class addingFirstName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
