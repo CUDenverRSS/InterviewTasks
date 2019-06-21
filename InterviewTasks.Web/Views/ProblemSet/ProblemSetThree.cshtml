@@ -26,7 +26,6 @@
             <button class="btn btn-primary" value="submit">Submit</button>
         </div>
     </div>
-
 </form>
 
 <table class="table mt-5">
@@ -46,20 +45,10 @@
             <td>@contact.LastName</td>
             <td>@contact.Email</td>
             <td>@contact.PhoneNumber</td>
-            <td><input type="button" class="btn btn-danger" value="Delete" onclick="deleteContact(@contact.Id)" /></td>
+            <td>
+                <a class="btn btn-danger" asp-action="DeleteContact" asp-route-id="@contact.Id">Delete</a>
+            </td>
         </tr>
     }
     </tbody>
 </table>
-
-<script type="text/javascript">
-    function deleteContact(id) {
-        $.ajax({
-            url: '/api/Contacts/' + id,
-            type: 'DELETE',
-            success: function(result) {
-                $("#" + id).remove();
-            }
-        });
-    };
-</script>

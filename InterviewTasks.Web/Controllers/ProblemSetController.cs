@@ -21,20 +21,35 @@ namespace InterviewTasks.Web.Controllers
             this.contactBll = contactBll;
         }
 
-        
+        // Tell the user which validation rules to add to the Entity Model.
         // Pull down the source from git as part of the exercise.
 
+
+
         /// <summary>
-        /// Create an adding calculator.
-        /// 1. Update ProblemSetOneViewModel to have three integer properties: Num1, Num2, and Sum.
-        /// 2. Add a form to the page with two inputs for Num1 and Num2.
-        /// 3. Create a Post Method that will add Num1 and Num2 and store it in Sum.
-        /// 4. Return the updated value to the page so that we can see the result.
+        /// ProblemSetOne is missing its Action Method.
+        /// 1. Add Problem Set One's method
+        /// 2. Add a property to the ProblemSetOneViewModel to display "Hello MVC" on the view.
         /// </summary>
         /// <returns></returns>
         public IActionResult ProblemSetOne()
         {
             var model = new ProblemSetOneViewModel();
+            model.Message = "Hello World";
+            return View(model);
+        }
+
+        /// <summary>
+        /// Create an adding calculator.
+        /// 1. Update ProblemSetTwoViewModel to have three integer properties: Num1, Num2, and Sum.
+        /// 2. Add a form to the page with two inputs for Num1 and Num2.
+        /// 3. Create a Post Method that will add Num1 and Num2 and store it in Sum.
+        /// 4. Return the updated value to the page so that we can see the result.
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult ProblemSetTwo()
+        {
+            var model = new ProblemSetTwoViewModel();
             model.Num1 = 0;
             model.Num2 = 0;
             model.Sum = 0;
@@ -42,28 +57,15 @@ namespace InterviewTasks.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProblemSetOne(ProblemSetOneViewModel model)
+        public IActionResult ProblemSetTwo(ProblemSetTwoViewModel model)
         {
             model.Sum = model.Num1 + model.Num2;
             return View(model);
         }
 
         /// <summary>
-        /// Problem Set Two is missing its Action Method.
-        /// 1. Add Problem Set Two's method
-        /// 2. Add a property to the ProblemSetTwoViewModel to display "Hello MVC" on the view.
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult ProblemSetTwo()
-        {
-            var model = new ProblemSetTwoViewModel();
-            model.Message = "Hello World";
-            return View(model);
-        }
-
-        /// <summary>
         /// For Problem Set Three, you will be performing operations on a contact list.
-        /// 1. Load all contacts from the database using the business logic.  Make sure they loaded in the view.
+        /// 1. Use the API to load all contacts. Make sure they loaded in the view.
         /// 2. Add a new ActionResult to add a new contact to the table.  Make sure it has server-side validation.
         /// 3. We want to start recording the last name for each contact.  Add this property to the Contact.
         /// 3.a. Update the Entity Framework Migration to track this new property.
@@ -72,10 +74,15 @@ namespace InterviewTasks.Web.Controllers
         /// 4.a. The delete functionality is not implemented for this api call.  Implement it.
         /// </summary>
         /// <returns></returns>
-        public IActionResult ProblemSetThree()
+        public async Task<IActionResult> ProblemSetThree()
         {
             var model = new ProblemSetThreeViewModel();
-            model.Contacts = contactBll.GetAll().ToList();
+
+            var client = new HttpClient();
+            client.BaseAddress = new Uri($"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}");
+            var contacts = await client.GetStringAsync("/api/Contacts/");
+
+            model.Contacts = JsonConvert.DeserializeObject<List<Contact>>(contacts);
             return View(model);
         }
 
@@ -90,6 +97,14 @@ namespace InterviewTasks.Web.Controllers
 
             model.Contacts = contactBll.GetAll().ToList();
             return View(model);
+        }
+
+        public IActionResult DeleteContact(int id)
+        {
+            var contact = contactBll.Get(id);
+            contactBll.Delete(contact);
+
+            return RedirectToAction(nameof(ProblemSetThree));
         }
 
         /// <summary>

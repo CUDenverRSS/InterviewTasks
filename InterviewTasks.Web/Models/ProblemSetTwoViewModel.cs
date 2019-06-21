@@ -2,6 +2,8 @@
 {
     public class ProblemSetTwoViewModel
     {
-        public string Message { get; set; }
+        public int Num1 { get; set; }
+        public int Num2 { get; set; }
+        public int Sum { get; set; }
     }
 }
