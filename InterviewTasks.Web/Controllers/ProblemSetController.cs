@@ -14,24 +14,16 @@ namespace InterviewTasks.Web.Controllers
 {
     public class ProblemSetController : Controller
     {
-        private readonly IContactBLL contactBll;
-
-        public ProblemSetController(IContactBLL contactBll)
+        public ProblemSetController()
         {
-            this.contactBll = contactBll;
         }
-
-        // Tell the user which validation rules to add to the Entity Model.
-        // Pull down the source from git as part of the exercise.
-
-
 
         /// <summary>
         /// ProblemSetOne is missing its Action Method.
         /// 1. Add Problem Set One's method
         /// 2. Pass a message from the server to the client such as 'hello mvc'
         /// </summary>
-
+        
 
         /// <summary>
         /// Create an adding calculator.
@@ -46,18 +38,17 @@ namespace InterviewTasks.Web.Controllers
 
         /// <summary>
         /// For Problem Set Three, you will be performing operations on a contact list.
-        /// 1. Use the API to load all contacts. Make sure they loaded in the view.
-        /// 2. Add a new ActionResult to add a new contact to the table.
+        /// 1. Use the API to load all contacts. Make sure they are displayed in the view.
+        /// 2. Add a form to add a new contact to the table. Use the ContactBLL's Add Method to save it to the database.
         /// 3. Add validation to the database model. All fields should be required.  Make sure a valid email and phone number are used.
         /// 3. We want to start recording the last name for each contact.
         /// 3.a. Add this property to the Contact.
         /// 3.b. Update the Entity Framework Migration to track this new property.
         /// 3.c. Update the UI to include this input in the form.
         /// 4. We want to delete contacts that are no longer needed.
-        /// 4.a. Add the ability to delete a contact in the table.
+        /// 4.a. Add the ability to delete a contact in the table.  Display a confirmation before the record is deleted.
         /// 4.b. Implement the delete functionality within the business logic.
         /// </summary>
-        /// <returns></returns>
         public IActionResult ProblemSetThree()
         {
             var model = new ProblemSetThreeViewModel();
