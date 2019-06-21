@@ -23,7 +23,7 @@ namespace InterviewTasks.Web.Controllers
         /// 1. Add Problem Set One's method
         /// 2. Pass a message from the server to the client such as 'hello mvc'
         /// </summary>
-        
+
 
         /// <summary>
         /// Create an adding calculator.
