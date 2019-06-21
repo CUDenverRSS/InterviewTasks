@@ -58,20 +58,5 @@ namespace InterviewTasks.API.Controllers
 
             return NoContent();
         }
-
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
-        {
-            var contact = contactBll.Get(id);
-
-            if (contact == null)
-            {
-                return NotFound();
-            }
-
-            contactBll.Delete(contact);
-
-            return NoContent();
-        }
     }
 }

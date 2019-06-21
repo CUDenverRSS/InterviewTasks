@@ -6,31 +6,23 @@
 <h1>@ViewData["Title"]</h1>
 <hr/>
 
+<p>
+    api.weather.gov will allow you to pull in a detailed weather forecast.
+    Documentation can be found here: <a href="https://www.weather.gov/documentation/services-web-api">https://www.weather.gov/documentation/services-web-api</a>
+    <ol>
+        <li>
+            Make an api call to get the weather info for Denver.
+        </li>
+        <li>
+            Pass this data to the front end using model.Forecast
+        </li>
+    </ol>
+
+    API Call: https://api.weather.gov/gridpoints/BOU/62,61/forecast
+</p>
+
 <h3>Weather Forecast</h3>
 
 <div class="row">
-    @foreach (var period in Model.Forecast.Properties.Periods.Take(4))
-    {
-        <div class="col-md-3">
-            <div class="text-center font-weight-bold">
-                    @period.Name
-            </div>
-            <div class="card">
-                <img class="card-img-top" src="@period.Icon" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title"></h5>
-                    <h6 class="card-subtitle mb-2 text-muted">@period.WindSpeed winds</h6>
-                    <p class="card-text">
-                        @period.Temperature @period.TemperatureUnit
-                        <br/>
-                        @period.ShortForecast
-                    </p>
-                    
-                </div>
-            </div>
-        </div>
-    }
+    
 </div>
-<card>
-
-</card>

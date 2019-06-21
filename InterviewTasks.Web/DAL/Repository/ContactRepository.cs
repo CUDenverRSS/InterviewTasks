@@ -37,11 +37,5 @@ namespace InterviewTasks.Web.Interfaces.Repository
         {
             return Context.Contacts;
         }
-
-        public void Delete(Contact contact)
-        {
-            Context.Contacts.Remove(contact);
-            Context.SaveChanges();
-        }
     }
 }

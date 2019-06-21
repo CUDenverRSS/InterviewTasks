@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InterviewTasks.Web.Migrations
 {
     [DbContext(typeof(InterviewTasksContext))]
-    [Migration("20190618213214_Initial")]
+    [Migration("20190621155351_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

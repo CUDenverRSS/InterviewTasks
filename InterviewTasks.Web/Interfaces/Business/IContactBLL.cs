@@ -4,6 +4,5 @@ namespace InterviewTasks.Web.Interfaces.Business
 {
     public interface IContactBLL : IBLL<Contact>
     {
-        void Delete(Contact contact);
     }
 }

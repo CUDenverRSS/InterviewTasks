@@ -7,48 +7,30 @@
 
 <hr/>
 
-<h3>Add New Contact</h3>
-<form method="post" asp-action="ProblemSetThree">
-    <div class="form-row">
-        <div class="col">
-            <input type="text" class="form-control" asp-for="NewContact.FirstName" placeholder="First name">
-        </div>
-        <div class="col">
-            <input type="text" class="form-control" asp-for="NewContact.LastName" placeholder="First name">
-        </div>
-        <div class="col">
-            <input type="text" class="form-control" asp-for="NewContact.Email" placeholder="Email">
-        </div>
-        <div class="col">
-            <input type="text" class="form-control" asp-for="NewContact.PhoneNumber" placeholder="Phone Number">
-        </div>
-        <div class="col">
-            <button class="btn btn-primary" value="submit">Submit</button>
-        </div>
-    </div>
-</form>
+<p>
+    For Problem Set Three, you will be performing operations on a contact list.
+    <ol>
+        <li>Use the API to load all contacts. Make sure they loaded in the view.</li>
+        <li>Add a new ActionResult to add a new contact to the table.  Make sure it has server-side validation.</li>
+        <li>We want to start recording the last name for each contact.  
+            <ol>
+                <li>Add this property to the Contact.</li>
+                <li>Update the Entity Framework Migration to track this new property.</li>
+                <li>Update the UI to include this input in the form.</li>
+            </ol>
+        </li>
+        <li> We want to delete contacts that are no longer needed.
+            <ol>
+                <li>Add the ability to delete a contact in the table.</li>
+                <li>Implement the delete functionality within the business logic.</li>
+            </ol>
+        </li>
+    </ol>
+</p>
 
-<table class="table mt-5">
-    <thead>
-    <tr>
-        <th>First Name</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var contact in Model.Contacts)
-    {
-        <tr id="@contact.Id">
-            <td>@contact.FirstName</td>
-            <td>@contact.LastName</td>
-            <td>@contact.Email</td>
-            <td>@contact.PhoneNumber</td>
-            <td>
-                <a class="btn btn-danger" asp-action="DeleteContact" asp-route-id="@contact.Id">Delete</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+
+<h3>Add New Contact Form Here</h3>
+
+
+<h3>Add Table of Contacts Here</h3>
+

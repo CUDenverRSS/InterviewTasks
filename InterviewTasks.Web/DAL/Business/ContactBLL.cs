@@ -35,10 +35,5 @@ namespace InterviewTasks.Web.Interfaces.Business
         {
             return contactRepository.GetAll();
         }
-
-        public void Delete(Contact contact)
-        {
-            contactRepository.Delete(contact);
-        }
     }
 }
