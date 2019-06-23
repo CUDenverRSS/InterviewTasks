@@ -1,8 +1,10 @@
-﻿using InterviewTasks.Web.DAL.Domain;
+﻿using System;
+using System.Linq;
+using InterviewTasks.Web.DAL.Domain;
 
 namespace InterviewTasks.Web.Interfaces.Repository
 {
     public interface IContactRepository : IRepository<Contact>
-    {
+    {        
     }
 }

@@ -4,7 +4,7 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-<hr/>
+<hr />
 
 <p>
     api.weather.gov will allow you to pull in a detailed weather forecast.
@@ -23,6 +23,14 @@
 
 <h3>Weather Forecast</h3>
 
-<div class="row">
-    
-</div>
+@foreach (var item in Model.Forecast.Properties.Periods)
+{
+    <dl class="row">
+        <dt class="col-md-3">
+            <h5>@item.Name</h5>
+        </dt>
+        <dd class="col-md-9">
+            <h6 class="text-muted">@item.DetailedForecast</h6>
+        </dd>
+    </dl>
+}

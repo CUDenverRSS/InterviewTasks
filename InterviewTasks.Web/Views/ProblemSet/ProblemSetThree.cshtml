@@ -5,55 +5,126 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<hr/>
+<hr />
+
 <div class="container">
 
+    <div class="row">
+        <p>
+            For Problem Set Three, you will be performing operations on a contact list.
+            <ol>
+                <li>Use the API to load all contacts. Make sure they loaded in the view.</li>
+                <li>Add a new ActionResult to add a new contact to the table.  Make sure it has server-side validation.</li>
+                <li>
+                    We want to start recording the last name for each contact.
+                    <ol>
+                        <li>Add this property to the Contact.</li>
+                        <li>Update the Entity Framework Migration to track this new property.</li>
+                        <li>Update the UI to include this input in the form.</li>
+                    </ol>
+                </li>
+                <li>
+                    We want to delete contacts that are no longer needed.
+                    <ol>
+                        <li>Add the ability to delete a contact in the table.</li>
+                        <li>Implement the delete functionality within the business logic.</li>
+                    </ol>
+                </li>
+            </ol>
+        </p>
+    </div>
 
-    <p>
-        For Problem Set Three, you will be performing operations on a contact list.
-        <ol>
-            <li>Use the API to load all contacts. Make sure they loaded in the view.</li>
-            <li>Add a new ActionResult to add a new contact to the table.  Make sure it has server-side validation.</li>
-            <li>
-                We want to start recording the last name for each contact.
-                <ol>
-                    <li>Add this property to the Contact.</li>
-                    <li>Update the Entity Framework Migration to track this new property.</li>
-                    <li>Update the UI to include this input in the form.</li>
-                </ol>
-            </li>
-            <li>
-                We want to delete contacts that are no longer needed.
-                <ol>
-                    <li>Add the ability to delete a contact in the table.</li>
-                    <li>Implement the delete functionality within the business logic.</li>
-                </ol>
-            </li>
-        </ol>
-    </p>
-
-
-    <h3>Add New Contact Form Here</h3>
-    @using (Html.BeginForm("ProblemSetThree", "ProblemSet", FormMethod.Post))
-    {
-        <div class="row">
-            <div class="col-md-4">
-                @Html.EditorFor(model => model.NewContact.FirstName)
-                @Html.EditorFor(model => model.NewContact.LastName)
-                @Html.EditorFor(model => model.NewContact.Email)
-                @Html.ValidationMessageFor(model => model.NewContact.Email)
-                @Html.EditorFor(model => model.NewContact.PhoneNumber)
-                @Html.ValidationMessageFor(model => model.NewContact.PhoneNumber)
+    <div class="row">
+        <h3>Add New Contact Form Here</h3>
+    </div>
+    <div class="row">
+        <form asp-controller="ProblemSet" asp-action="ProblemSetThree" method="post">
+            <div class="form-group">
+                <label asp-for="NewContact.FirstName" class="control-label"></label>
+                <div>
+                    <input asp-for="NewContact.FirstName" class="form-control" />
+                    <span asp-validation-for="NewContact.FirstName" class="text-danger"></span>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <input type="submit" value="Submit" id="btnSubmit" />
+            <div class="form-group">
+                <label asp-for="NewContact.LastName" class="control-label"></label>
+                <div>
+                    <input asp-for="NewContact.LastName" class="form-control" />
+                    <span asp-validation-for="NewContact.LastName" class="text-danger"></span>
+                </div>
             </div>
-        </div>
-    }
+            <div class="form-group">
+                <label asp-for="NewContact.Email" class="control-label"></label>
+                <div>
+                    <input asp-for="NewContact.Email" class="form-control" />
+                    <span asp-validation-for="NewContact.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewContact.PhoneNumber" class="control-label"></label>
+                <div>
+                    <input asp-for="NewContact.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="NewContact.PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add Contact" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
 
-
-    <h3>Add Table of Contacts Here</h3>
+    <div class="row">
+        <h3>Add Table of Contacts Here</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">@Html.LabelFor(model => model.Contacts.FirstOrDefault().LastName)</th>
+                    <th scope="col">@Html.LabelFor(model => model.Contacts.FirstOrDefault().FirstName)</th>
+                    <th scope="col">@Html.LabelFor(model => model.Contacts.FirstOrDefault().Email)</th>
+                    <th scope="col">@Html.LabelFor(model => model.Contacts.FirstOrDefault().PhoneNumber)</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Contacts)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger deleteContact" id="@item.Id">Delete Contact</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<div class="modal fade" id="deleteContactModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you wish to delete this contact?
+            </div>
+            <div class="modal-footer">
+                <a id="deleteContactHref" href="" class="btn btn-danger">Yes</a>
+                <button type="button" class="btn default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

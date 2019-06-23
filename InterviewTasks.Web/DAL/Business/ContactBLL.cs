@@ -7,7 +7,7 @@ using InterviewTasks.Web.Interfaces.Repository;
 
 namespace InterviewTasks.Web.Interfaces.Business
 {
-    public class ContactBLL : IContactBLL
+    public class ContactBLL : IContactBLL<Contact>
     {
         private readonly IContactRepository contactRepository;
 
@@ -34,6 +34,16 @@ namespace InterviewTasks.Web.Interfaces.Business
         public IQueryable<Contact> GetAll()
         {
             return contactRepository.GetAll();
+        }
+
+        public async Task<List<Contact>> GetAllAsync(Uri requestUri)
+        {
+            return await contactRepository.GetAllAsync(requestUri);
+        }
+
+        public void Delete(int id)
+        {
+            contactRepository.Delete(id);
         }
     }
 }

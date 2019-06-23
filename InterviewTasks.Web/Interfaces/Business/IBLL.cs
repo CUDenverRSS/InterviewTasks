@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace InterviewTasks.Web.Interfaces.Business
 {
@@ -8,5 +11,6 @@ namespace InterviewTasks.Web.Interfaces.Business
         T Update(T model);
         T Get(int id);
         IQueryable<T> GetAll();
+        void Delete(int id);
     }
 }
