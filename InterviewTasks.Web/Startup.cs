@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InterviewTasks.Web.DAL.Domain;
 using InterviewTasks.Web.Interfaces.Business;
 using InterviewTasks.Web.Interfaces.Repository;
 using InterviewTasks.Web.Repository;
@@ -36,7 +37,7 @@ namespace InterviewTasks.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddScoped<IContactBLL, ContactBLL>();
+            services.AddScoped<IContactBLL<Contact>, ContactBLL>();
             services.AddScoped<IContactRepository, ContactRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

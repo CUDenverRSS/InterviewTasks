@@ -14,9 +14,9 @@ namespace InterviewTasks.API.Controllers
     [ApiController]
     public class ContactsController : ControllerBase
     {
-        private readonly IContactBLL contactBll;
+        private readonly IContactBLL<Contact> contactBll;
 
-        public ContactsController(IContactBLL contactBll)
+        public ContactsController(IContactBLL<Contact> contactBll)
         {
             this.contactBll = contactBll;
         }

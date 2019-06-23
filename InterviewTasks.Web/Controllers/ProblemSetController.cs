@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using InterviewTasks.Web.DAL.Domain;
 using InterviewTasks.Web.Interfaces.Business;
@@ -9,13 +10,16 @@ using InterviewTasks.Web.Models;
 using InterviewTasks.Web.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace InterviewTasks.Web.Controllers
 {
     public class ProblemSetController : Controller
     {
-        public ProblemSetController()
+        private IContactBLL<Contact> _contactBLL;
+        public ProblemSetController(IContactBLL<Contact> contactBLL)
         {
+            this._contactBLL = contactBLL;
         }
 
         /// <summary>
@@ -26,11 +30,10 @@ namespace InterviewTasks.Web.Controllers
         /// 
         public ActionResult ProblemSetOne()
         {
-            var model = new ProblemSetOneViewModel() { OutString = "hello mvc"};
+            var model = new ProblemSetOneViewModel() { OutString = "hello mvc" };
             return View(model);
         }
 
-        
         /// <summary>
         /// Create an adding calculator.
         /// Create a form with two numeric inputs.  When the form is submitted,
@@ -45,12 +48,14 @@ namespace InterviewTasks.Web.Controllers
         [HttpPost]
         public ActionResult ProblemSetTwo(ProblemSetTwoViewModel vm)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
             var sum = vm.NumberOne + vm.NumberTwo;
             vm.Sum = sum;
             return View(vm);
         }
-
-
 
         /// <summary>
         /// For Problem Set Three, you will be performing operations on a contact list.
@@ -68,11 +73,38 @@ namespace InterviewTasks.Web.Controllers
         public async Task<ActionResult> ProblemSetThree()
         {
             var model = new ProblemSetThreeViewModel();
-            var client = new HttpClient();
-            client.BaseAddress = new Uri($"{Request.Scheme}://{Request.Host}{Request.PathBase}");
-            var response = await client.GetStringAsync("/api/contacts");
-            model.Contacts = JsonConvert.DeserializeObject<List<Contact>>(response);
+            var uri = new Uri($"{Request.Scheme}://{Request.Host}{Request.PathBase}/api/contacts");
+            model.Contacts = await _contactBLL.GetAllAsync(uri);
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ProblemSetThree(ProblemSetThreeViewModel vm)
+        {
+            using (var client = new HttpClient())
+            {
+                var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.PathBase}/api/Contacts");
+                if (!ModelState.IsValid)
+                {
+                    vm.Contacts = await _contactBLL.GetAllAsync(url);
+                    return View(vm);
+                }                
+                var json = JsonConvert.SerializeObject(vm.NewContact);
+                using (var response = await client.PostAsync(url, new StringContent(json, Encoding.UTF8, "application/json")))
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+                ModelState.Clear();
+                var model = new ProblemSetThreeViewModel();
+                model.Contacts = await _contactBLL.GetAllAsync(url);
+                return View(model);
+            }
+        }
+
+        public ActionResult DeleteContact(int id)
+        {
+            _contactBLL.Delete(id);
+            return RedirectToAction("ProblemSetThree");
         }
 
         /// <summary>
@@ -82,9 +114,13 @@ namespace InterviewTasks.Web.Controllers
         /// 2. Pass this data to the front end using model.Forecast
         /// API Call: https://api.weather.gov/gridpoints/BOU/62,61/forecast
         /// </summary>
-        public IActionResult ProblemSetFour()
+        public async Task<IActionResult> ProblemSetFour()
         {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "UOCInterview");
+            var responseString = await client.GetStringAsync(new Uri($"https://api.weather.gov/gridpoints/BOU/62,61/forecast"));
             var model = new ProblemSetFourViewModel();
+            model.Forecast = JsonConvert.DeserializeObject<ForecastDTO>(responseString);
             return View(model);
         }
     }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using InterviewTasks.Web.DAL.Domain;
 using InterviewTasks.Web.DAL.Repository;
 using InterviewTasks.Web.Repository;
+using Newtonsoft.Json;
 
 namespace InterviewTasks.Web.Interfaces.Repository
 {
@@ -36,6 +38,21 @@ namespace InterviewTasks.Web.Interfaces.Repository
         public IQueryable<Contact> GetAll()
         {
             return Context.Contacts;
+        }
+
+        public async Task<List<Contact>> GetAllAsync(Uri requestUri)
+        {
+            using (var client = new HttpClient())
+            {
+                var responseString = await client.GetStringAsync(requestUri);
+                return JsonConvert.DeserializeObject<List<Contact>>(responseString);
+            }
+        }
+
+        public void Delete(int id)
+        {
+            Context.Contacts.Remove(Get(id));
+            Context.SaveChanges();
         }
     }
 }
