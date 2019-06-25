@@ -5,7 +5,10 @@ namespace InterviewTasks.Web.Models
 {
     public class ProblemSetThreeViewModel
     {
+ 
         public Contact NewContact { get; set; }
+
+  
         public List<Contact> Contacts { get; set; }
     }
 }

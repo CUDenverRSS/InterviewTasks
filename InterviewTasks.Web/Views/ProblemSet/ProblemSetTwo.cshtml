@@ -6,8 +6,23 @@
 <h1>@ViewData["Title"]</h1>
 
 <hr/>
-
-<p>
-    Add a form with two inputs. Clicking the submit button should display the sum of the two numbers.
-</p>
-
+<form id="addNumbers">
+    <div>
+        <label>Enter first number integer:</label>
+        <input asp-for="FirstNum" />
+    </div>
+    <div>
+        <label>Enter second number integer:</label>
+        <input asp-for="SecondNum" />
+    </div>
+    <div>
+        <input type="submit" />
+    </div>
+    <p>
+        @Html.ActionLink("Back to the view", "ProblemSetTwo");
+    </p>
+    <p>
+        Add a form with two inputs. Clicking the submit button should display the sum of the two numbers.
+        <div>@Model.result</div>
+    </p>
+</form>

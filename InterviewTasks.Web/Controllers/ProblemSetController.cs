@@ -23,17 +23,24 @@ namespace InterviewTasks.Web.Controllers
         /// 1. Add Problem Set One's method
         /// 2. Pass a message from the server to the client such as 'hello mvc'
         /// </summary>
-
+        public IActionResult ProblemSetOne()
+        {
+            Console.WriteLine("Hello World of RSS!");
+            return View();
+        }
 
         /// <summary>
         /// Create an adding calculator.
         /// Create a form with two numeric inputs.  When the form is submitted,
         /// the sum of the two numbers should be displayed on the page.
         /// </summary>
-        public IActionResult ProblemSetTwo()
+        public IActionResult ProblemSetTwo(int firstNum, int secondNum)
         {
+
             var model = new ProblemSetTwoViewModel();
-            return View(model);
+            model.result = firstNum + secondNum;
+            
+            return View("ProblemSetTwo",model);
         }
 
         /// <summary>

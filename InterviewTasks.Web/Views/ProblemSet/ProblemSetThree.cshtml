@@ -30,7 +30,12 @@
 
 
 <h3>Add New Contact Form Here</h3>
-
+<form id="contactForm">
+        <div>
+        <label>Enter first Name:</label>
+        <input asp-for="@Model.Contacts[0].FirstName" />
+    </div>
+</form>
 
 <h3>Add Table of Contacts Here</h3>
 
