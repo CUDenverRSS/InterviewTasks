@@ -5,9 +5,22 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<hr/>
+<hr />
 
 <p>
-    Add a form with two inputs. Clicking the submit button should display the sum of the two numbers.
+    <input type="text" id="first" />
+    <input type="text" id="second" />"
+    <input type="submit" id="submit" value="Add" />
+    <div id="answer"></div>
 </p>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
+<script type="text/javascript">
+    $(function () {
+        $('#submit').click(function () {
+            var first = parseInt($('#first').val());
+            var second = parseInt($('#second').val());
+            $('#answer').html(first + second);          
+        });
+    });
+</script>
