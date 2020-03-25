@@ -30,7 +30,39 @@
 
 
 <h3>Add New Contact Form Here</h3>
+<form method="post">
+    <input asp-for="NewContact.FirstName" />
+    <input asp-for="NewContact.Email" />
+    <input asp-for="NewContact.PhoneNumber" />
 
+
+    <input type="submit" />
+</form>
 
 <h3>Add Table of Contacts Here</h3>
+<table>
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+                <td>Phone</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+</table>
+<script>
+    $.ajax('https://localhost:44334/api/Contacts',   // request url
+    {
+        success: function (data, status, xhr) {// success callback function
+            console.log(data);
+            //$('p').append(data);
 
+    }
+});
+</script>

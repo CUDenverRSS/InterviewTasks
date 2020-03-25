@@ -1,12 +1,13 @@
-﻿
+﻿@model ProblemSetOneViewModel
+
 @{
     ViewData["Title"] = "Problem Set One";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<hr/>
+<hr />
 
 <p>
-    Display a message passed from the server.
+    @Model.Message
 </p>

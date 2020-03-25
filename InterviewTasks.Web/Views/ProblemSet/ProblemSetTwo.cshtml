@@ -5,9 +5,16 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<hr/>
+<hr />
 
-<p>
-    Add a form with two inputs. Clicking the submit button should display the sum of the two numbers.
-</p>
+<p>Add some numbers</p>
+
+<form method="post">
+    <input asp-for="NumOne" />
+    <input asp-for="NumTwo" />
+
+    <input type="submit" />
+</form>
+
+<div>@Model.Sum</div>
 

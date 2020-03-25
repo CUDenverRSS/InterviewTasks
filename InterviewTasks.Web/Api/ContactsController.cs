@@ -24,7 +24,8 @@ namespace InterviewTasks.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Contact>> Get()
         {
-            return contactBll.GetAll().ToList();
+            var contacts =  contactBll.GetAll().ToList();
+            return contacts;
         }
 
         [HttpGet("{id}")]

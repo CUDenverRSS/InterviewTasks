@@ -14,8 +14,11 @@ namespace InterviewTasks.Web.Controllers
 {
     public class ProblemSetController : Controller
     {
-        public ProblemSetController()
+        private IContactBLL _contactBLL;
+
+        public ProblemSetController(IContactBLL iContactBLL)
         {
+            _contactBLL = iContactBLL;
         }
 
         /// <summary>
@@ -23,6 +26,14 @@ namespace InterviewTasks.Web.Controllers
         /// 1. Add Problem Set One's method
         /// 2. Pass a message from the server to the client such as 'hello mvc'
         /// </summary>
+        public IActionResult ProblemSetOne()
+        {
+            var model = new ProblemSetOneViewModel
+            {
+                Message = "hello mvc"
+            };
+            return View(model);
+        }
 
 
         /// <summary>
@@ -35,6 +46,13 @@ namespace InterviewTasks.Web.Controllers
             var model = new ProblemSetTwoViewModel();
             return View(model);
         }
+        [HttpPost]
+        public ActionResult ProblemSetTwo(ProblemSetTwoViewModel problemSetTwoViewModel)
+        {
+            problemSetTwoViewModel.Sum = problemSetTwoViewModel.NumOne + problemSetTwoViewModel.NumTwo;
+            return View(problemSetTwoViewModel);
+        }
+
 
         /// <summary>
         /// For Problem Set Three, you will be performing operations on a contact list.
@@ -54,7 +72,12 @@ namespace InterviewTasks.Web.Controllers
             var model = new ProblemSetThreeViewModel();
             return View(model);
         }
-
+        [HttpPost]
+        public ActionResult ProblemSetThree(ProblemSetThreeViewModel problemSetThreeViewModel)
+        {
+            _contactBLL.Add(problemSetThreeViewModel.NewContact);
+            return View(problemSetThreeViewModel);
+        }
         /// <summary>
         /// api.weather.gov will allow you to pull in a detailed weather forecast.
         /// Documentation can be found here: https://www.weather.gov/documentation/services-web-api
