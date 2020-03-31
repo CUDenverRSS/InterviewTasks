@@ -14,8 +14,10 @@ namespace InterviewTasks.Web.Controllers
 {
     public class ProblemSetController : Controller
     {
-        public ProblemSetController()
+        private readonly IContactBLL _contactBLL;
+        public ProblemSetController(IContactBLL contactBll)
         {
+            _contactBLL = contactBll;
         }
 
         /// <summary>
@@ -23,6 +25,14 @@ namespace InterviewTasks.Web.Controllers
         /// 1. Add Problem Set One's method
         /// 2. Pass a message from the server to the client such as 'hello mvc'
         /// </summary>
+        public IActionResult ProblemSetOne()
+        {
+            var model = new ProblemSetOneViewModel();
+            // TODO add data to view model for client
+            ViewData["MyMessage"] = "Hello from MVC";
+
+            return View(model);
+        }
 
 
         /// <summary>
@@ -33,12 +43,22 @@ namespace InterviewTasks.Web.Controllers
         public IActionResult ProblemSetTwo()
         {
             var model = new ProblemSetTwoViewModel();
+
+
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ProblemSetTwo(ProblemSetTwoViewModel problemSetTwoViewModel)
+        {
+            problemSetTwoViewModel.Sum = problemSetTwoViewModel.NumberA + problemSetTwoViewModel.NumberB;
+
+            return View(problemSetTwoViewModel);
         }
 
         /// <summary>
         /// For Problem Set Three, you will be performing operations on a contact list.
-        /// 1. Use the API to load all contacts. Make sure they are displayed in the view.
+        /// 1. Use the API to load all contacts. Make sure they are displayed in the view. DONE
         /// 2. Add a form to add a new contact to the table. Use the ContactBLL's Add Method to save it to the database.
         /// 3. Add validation to the database model. All fields should be required.  Make sure a valid email and phone number are used.
         /// 3. We want to start recording the last name for each contact.
@@ -52,7 +72,32 @@ namespace InterviewTasks.Web.Controllers
         public IActionResult ProblemSetThree()
         {
             var model = new ProblemSetThreeViewModel();
+
+            model.Contacts = _contactBLL.GetAll().ToList();
+
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ProblemSetThree(ProblemSetThreeViewModel problemSetThreeViewModel)
+        {
+            Contact dbContact = new Contact();
+
+            dbContact.FirstName = problemSetThreeViewModel.NewContact.FirstName;
+            dbContact.Email = problemSetThreeViewModel.NewContact.Email;
+            dbContact.PhoneNumber = problemSetThreeViewModel.NewContact.PhoneNumber;
+
+            try
+            {
+                _contactBLL.Add(dbContact);
+            }
+            catch(Exception e)
+            {
+
+            }
+
+            //return View(problemSetThreeViewModel); // consider redirecting to get
+            return RedirectToAction(nameof(ProblemSetThree));
         }
 
         /// <summary>

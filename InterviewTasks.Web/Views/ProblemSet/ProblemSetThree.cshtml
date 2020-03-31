@@ -28,9 +28,31 @@
     </ol>
 </p>
 
-
-<h3>Add New Contact Form Here</h3>
-
+<h3>Contacts</h3>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4">
+            @*Get nullreference here assume Model.Contacts null / dne*@
+            @foreach (var contact in Model.Contacts)
+            {
+                <div>@contact.FirstName</div>
+                <div>@contact.Email</div>
+                <div>@contact.PhoneNumber</div>
+            }
+        </div>
+    </div>
+    <h3>Add New Contact Form Here</h3>
+    <div class="row">
+        <div class="col-4">
+            <form method="post">
+                <input asp-for="NewContact.FirstName" />
+                <input asp-for="NewContact.Email" />
+                <input asp-for="NewContact.PhoneNumber" />
+                <input type="submit" />
+            </form>
+        </div>
+    </div>
+</div>
 
 <h3>Add Table of Contacts Here</h3>
 

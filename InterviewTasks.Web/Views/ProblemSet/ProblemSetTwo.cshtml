@@ -11,3 +11,21 @@
     Add a form with two inputs. Clicking the submit button should display the sum of the two numbers.
 </p>
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4"> 
+            @* TODO align this in center later  *@
+            <form method="post">
+                NumberA:
+                <input asp-for="NumberA" />
+                <input asp-for="NumberB" />
+
+                <input type="submit" />
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    @Model.Sum
+</div>
+
